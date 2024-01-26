@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, APIRouter
 import time
+from app.users.router import router as users_router
 
 app = FastAPI()
 
@@ -17,3 +18,9 @@ async def add_process_time_header(request: Request, call_next):
 def root():
     return {"message": "Hello World"}
 
+
+router = APIRouter(prefix="/api")
+
+router.include_router(users_router)
+
+app.include_router(router)
