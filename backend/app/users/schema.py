@@ -1,5 +1,6 @@
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
+from datetime import datetime
 
 
 class User(BaseModel):
@@ -8,6 +9,8 @@ class User(BaseModel):
     is_admin: bool
     is_active: bool
     is_notice: bool
+    created_at: datetime
+    updated_at: datetime
 
 
 class UserCreate(BaseModel):
