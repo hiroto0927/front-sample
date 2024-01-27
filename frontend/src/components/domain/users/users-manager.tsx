@@ -5,6 +5,9 @@ import useGetUsers from "./hooks/user-get";
 import ToggleSwitch from "@/components/ui/form/toggle-switch";
 import { updateUserRequest } from "./lib/user-request";
 
+// 半角英字、全角ひらがな、全角カタカナ、漢字のみを許可する正規表現
+const validateString = /^[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]*$/;
+
 export default function UsersManager() {
   const { data, isLoading, error, mutate } = useGetUsers();
 
@@ -30,10 +33,8 @@ export default function UsersManager() {
                 className="outline-none"
                 onBlur={(e) => {
                   const value = e.target.value;
-                  const isValid =
-                    /^[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]*$/.test(
-                      value
-                    );
+                  const isValid = validateString.test(value);
+
                   if (!isValid) {
                     e.target.value = user.name;
                     return alert("無効な文字が入力されています");
