@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 const ToggleSwitch = memo(function ToggleSwitch(props: {
-  onChage?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   isCheck?: boolean;
 }) {
   return (
@@ -10,7 +10,7 @@ const ToggleSwitch = memo(function ToggleSwitch(props: {
         v-model="isCheck"
         type="checkbox"
         className="peer sr-only"
-        onChange={props.onChage}
+        onChange={props.onChange}
         checked={props.isCheck}
       />
       <span

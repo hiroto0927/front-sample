@@ -6,7 +6,7 @@ import ToggleSwitch from "@/components/ui/form/toggle-switch";
 import { updateUserRequest } from "./lib/user-request";
 
 export default function UsersManager() {
-  const { data, isLoading, error } = useGetUsers();
+  const { data, isLoading, error, mutate } = useGetUsers();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -20,8 +20,6 @@ export default function UsersManager() {
           { key: "is_admin", label: "権限" },
           { key: "is_active", label: "ステータス" },
           { key: "is_notice", label: "通知" },
-          { key: "created_at", label: "作成日" },
-          { key: "updated_at", label: "更新日" },
         ]}
         rows={
           data?.map((user) => ({
@@ -30,30 +28,34 @@ export default function UsersManager() {
             is_admin: (
               <ToggleSwitch
                 isCheck={user.is_admin}
-                onChage={(e) =>
-                  updateUserRequest(user.id, { is_admin: e.target.checked })
-                }
+                onChange={(e) => {
+                  updateUserRequest(user.id, {
+                    is_admin: e.target.checked,
+                  }).then(() => mutate());
+                }}
               />
             ),
             is_active: (
               <ToggleSwitch
-                isCheck={user.is_admin}
-                onChage={(e) =>
-                  updateUserRequest(user.id, { is_active: e.target.checked })
-                }
+                isCheck={user.is_active}
+                onChange={(e) => {
+                  updateUserRequest(user.id, {
+                    is_active: e.target.checked,
+                  }).then(() => mutate());
+                }}
               />
             ),
             is_notice: (
               <ToggleSwitch
-                isCheck={user.is_admin}
-                onChage={(e) => {
-                  updateUserRequest(user.id, { is_notice: e.target.checked });
+                isCheck={user.is_notice}
+                onChange={(e) => {
+                  updateUserRequest(user.id, {
+                    is_notice: e.target.checked,
+                  }).then(() => mutate());
                 }}
               />
             ),
-            created_at: user.created_at,
-            updated_at: user.updated_at,
-            // onClickCell: () => {},
+            onClickCell: () => {},
           })) ?? []
         }
       />

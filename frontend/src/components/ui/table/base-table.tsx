@@ -54,14 +54,14 @@ export default function BaseTable<T extends DataObject>(props: TPropsTable<T>) {
               <td key={col.key}>
                 <div
                   className={cell()}
-                  // onClick={
-                  //   r.onClickCell
-                  //     ? r.onClickCell
-                  //     : (e) => {
-                  //         e.preventDefault();
-                  //         e.stopPropagation();
-                  //       }
-                  // }
+                  onClick={
+                    r.onClickCell
+                      ? r.onClickCell
+                      : (e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }
+                  }
                 >
                   {r[col.key]}
                 </div>
