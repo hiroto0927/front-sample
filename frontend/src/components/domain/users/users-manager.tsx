@@ -24,7 +24,43 @@ export default function UsersManager() {
         rows={
           data?.map((user) => ({
             id: user.id,
-            name: user.name,
+            name: (
+              <input
+                type="text"
+                className="outline-none"
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  const isValid =
+                    /^[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]*$/.test(
+                      value
+                    );
+                  if (!isValid) {
+                    e.target.value = user.name;
+                    return alert("無効な文字が入力されています");
+                  }
+
+                  if (value.length > 20) {
+                    e.target.value = user.name;
+                    return alert("20文字以内で入力してください");
+                  }
+
+                  if (value.length < 1) {
+                    e.target.value = user.name;
+                    return alert("1文字以上入力してください");
+                  }
+
+                  updateUserRequest(user.id, {
+                    name: e.target.value,
+                  }).then(() => mutate());
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    (e.target as HTMLInputElement).blur();
+                  }
+                }}
+                defaultValue={user.name}
+              />
+            ),
             is_admin: (
               <ToggleSwitch
                 isCheck={user.is_admin}
