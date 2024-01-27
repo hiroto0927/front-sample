@@ -13,4 +13,5 @@ services:
       - CHOKIDAR_USEPOLLING=true
     ports:
       - 8000:8000
-      - 8001:8001
+      - 3000:3000
+      - 80:80

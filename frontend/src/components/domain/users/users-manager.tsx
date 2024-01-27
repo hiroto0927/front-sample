@@ -4,6 +4,7 @@ import BaseTable from "@/components/ui/table/base-table";
 import useGetUsers from "./hooks/user-get";
 import ToggleSwitch from "@/components/ui/form/toggle-switch";
 import { updateUserRequest } from "./lib/user-request";
+import Select from "react-select";
 
 // 半角英字、全角ひらがな、全角カタカナ、漢字のみを許可する正規表現
 const validateString = /^[a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]*$/;
@@ -95,6 +96,16 @@ export default function UsersManager() {
             onClickCell: () => {},
           })) ?? []
         }
+      />
+      <Select
+        options={data.map((el) => ({
+          value: el,
+          label: el.name,
+        }))}
+        placeholder="なにか選んでね"
+        onChange={(e) => {
+          console.log(e?.value);
+        }}
       />
     </div>
   );
